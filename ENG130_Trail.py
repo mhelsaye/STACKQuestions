@@ -8,13 +8,15 @@ from datetime import datetime
 import time
 import os
 import json
-import os
+from oauth2client.service_account import ServiceAccountCredentials
 
-# Load the JSON from the environment and convert escaped newlines
+scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
+
+# Unescape newlines and parse JSON
 creds_json = os.environ["GOOGLE_CREDENTIALS"].replace("\\n", "\n")
 key_dict = json.loads(creds_json)
-creds = ServiceAccountCredentials.from_json_keyfile_dict(key_dict, scope)
 
+creds = ServiceAccountCredentials.from_json_keyfile_dict(key_dict, scope)
 
 
 # Open sheet
