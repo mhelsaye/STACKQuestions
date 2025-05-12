@@ -1,0 +1,6 @@
+dash==2.17.0
+numpy
+gspread==5.12.0
+oauth2client==4.1.3
+Flask==2.3.3
+gunicorn
