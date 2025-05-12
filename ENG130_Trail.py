@@ -12,14 +12,14 @@ from oauth2client.service_account import ServiceAccountCredentials
 
 scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
 
-try:
-    creds_json = os.environ["GOOGLE_CREDENTIALS"].replace("\\n", "\n")
-    key_dict = json.loads(creds_json)
-    creds = ServiceAccountCredentials.from_json_keyfile_dict(key_dict, scope)
-    client = gspread.authorize(creds)
-except Exception as e:
-    print("🚨 Error loading Google credentials:", e)
-    raise
+creds_json = os.environ["GOOGLE_CREDENTIALS"].replace("\\n", "\n")
+key_dict = json.loads(creds_json)
+
+creds = ServiceAccountCredentials.from_json_keyfile_dict(key_dict, scope)
+
+# Create client and connect to sheets - THIS LINE WAS MISSING
+client = gspread.authorize(creds)
+
 
 # Open sheet
 sheet = client.open("STACK").sheet1  # assumes it's the first sheet
