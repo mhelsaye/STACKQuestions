@@ -8,11 +8,12 @@ from datetime import datetime
 import time
 import os
 import json
-from google.oauth2 import service_account
+import os
 
-key_dict = json.loads(os.environ["GOOGLE_CREDENTIALS"])
-creds = service_account.Credentials.from_service_account_info(key_dict)
-client = gspread.authorize(creds)
+# Load the JSON from the environment and convert escaped newlines
+creds_json = os.environ["GOOGLE_CREDENTIALS"].replace("\\n", "\n")
+key_dict = json.loads(creds_json)
+creds = ServiceAccountCredentials.from_json_keyfile_dict(key_dict, scope)
 
 
 
