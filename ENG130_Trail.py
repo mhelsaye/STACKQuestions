@@ -10,16 +10,16 @@ import os
 import json
 from oauth2client.service_account import ServiceAccountCredentials
 
-scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
+creds_json = os.environ.get("GOOGLE_SERVICE_ACCOUNT_CREDENTIALS")
+if not creds_json:
+    raise ValueError("GOOGLE_SERVICE_ACCOUNT_CREDENTIALS environment variable is not set!")
 
-creds_json = os.environ["GOOGLE_CREDENTIALS"].replace("\\n", "\n")
+creds_json = creds_json.replace("\\\\n", "\\n").replace("\\n", "\n")  
 key_dict = json.loads(creds_json)
 
+scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
 creds = ServiceAccountCredentials.from_json_keyfile_dict(key_dict, scope)
-
-# Create client and connect to sheets - THIS LINE WAS MISSING
 client = gspread.authorize(creds)
-
 
 # Open sheet
 sheet = client.open("STACK").sheet1  # assumes it's the first sheet
