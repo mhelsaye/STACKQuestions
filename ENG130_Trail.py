@@ -6,11 +6,14 @@ import gspread
 from oauth2client.service_account import ServiceAccountCredentials
 from datetime import datetime
 import time
+from oauth2client.service_account import ServiceAccountCredentials
 
-# Define scope and auth
 scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
-creds = ServiceAccountCredentials.from_json_keyfile_name("credentials.json", scope)
+
+key_dict = json.loads(os.environ["GOOGLE_CREDENTIALS"].replace("\\n", "\n"))
+creds = ServiceAccountCredentials.from_json_keyfile_dict(key_dict, scope)
 client = gspread.authorize(creds)
+
 
 # Open sheet
 sheet = client.open("STACK").sheet1  # assumes it's the first sheet
