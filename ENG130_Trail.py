@@ -8,6 +8,7 @@ from datetime import datetime
 import time
 from oauth2client.service_account import ServiceAccountCredentials
 import json
+import os
 scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
 
 key_dict = json.loads(os.environ["GOOGLE_CREDENTIALS"].replace("\\n", "\n"))
